@@ -10,19 +10,6 @@ public class ReadTestData {
 
     public static Properties initvalues = null;
 
-    /*public static void main(String[] args) {
-        System.out.println("Aptitudo Hiring Calculator");
-        try {
-
-            // Initialize data
-            readCFGfile();
-
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }*///end main
-
     /**
      * Reads values from config file testdata.cfg
      * return properties object read from the given file
@@ -48,8 +35,6 @@ public class ReadTestData {
                 key = (String)en.nextElement();
                 val = indProp.getProperty(key);
                 initvalues.setProperty(key, val);
-                //System.out.println("Properties load exception1: " + key);
-                //System.out.println("Properties load exception2: " + val);
                 //System.out.println("Properties load exception: " + initvalues.getProperty(key));
             }
 
