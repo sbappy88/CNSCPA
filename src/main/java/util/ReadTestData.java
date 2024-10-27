@@ -9,6 +9,11 @@ import java.util.Properties;
 public class ReadTestData {
 
     public static Properties initvalues = null;
+    public static String pathSeparator = FileSystems.getDefault().getSeparator();
+    public static String projectPath = System.getProperty("user.dir") + pathSeparator;
+    public static String imagePath = System.getProperty("user.dir") + "\\Resources\\Image\\";
+    public static String image2Path = pathSeparator;
+
 
     /**
      * Reads values from config file testdata.cfg
@@ -19,8 +24,7 @@ public class ReadTestData {
         try
         {
 
-            String pathSeparator = FileSystems.getDefault().getSeparator();
-            String projectPath = System.getProperty("user.dir") + pathSeparator;
+
             Properties indProp = new Properties();
             indProp.load(Files.newInputStream(Paths.get(projectPath+"Resources\\Data\\testdata.cfg")));
             initvalues = new Properties();

@@ -15,6 +15,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
+import util.ReadTestData;
 
 import java.util.*;
 
@@ -27,7 +28,7 @@ public class WebTest {
     JavascriptExecutor js;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
 
         //Please uncomment if wants to test in Firefox browser
 //        System.setProperty("webdriver.gecko.driver","D:\\DDrive\\Soft\\geckodriver\\geckodriver.exe");
@@ -47,11 +48,12 @@ public class WebTest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
-        driver.manage().window().maximize();
+        //driver.manage().window().maximize();
 
         //Test case id: TC_01 verify Open the web aplication
-        String url= "http://123.200.20.20:5302/";
-        driver.get(url);
+        ReadTestData.readCFGfile(); //Read cfg file for loading test data
+        //String url= "http://123.200.20.20:5302/";
+        driver.get(Objects.requireNonNull(ReadTestData.getScriptValue("cpaurl")));
 
     }
 
@@ -101,11 +103,11 @@ public class WebTest {
      */
     public void CircularSearch() throws Exception{
         driver.findElement(By.cssSelector("#circularMst_filter .form-control")).click();
-        driver.findElement(By.cssSelector("#circularMst_filter .form-control")).sendKeys("circular24");
+        driver.findElement(By.cssSelector("#circularMst_filter .form-control")).sendKeys(Objects.requireNonNull(ReadTestData.getScriptValue("csearch")));
         driver.findElement(By.cssSelector("#circularMst_filter .form-control")).sendKeys(Keys.ENTER);
         //Thread.sleep(5000);
         //Assert.assertTrue(driver.getCurrentUrl().contains("99/2024"));
-        /**var camera = (TakesScreenshot)driver;
+        /*var camera = (TakesScreenshot)driver;
         File screenshot = camera.getScreenshotAs(OutputType.FILE);
         try{
             Files.move(screenshot, new File("D:\\\\SelIDE\\\\WebTest\\\\image\\\\SS.jpg"));
@@ -126,7 +128,7 @@ public class WebTest {
     public void JobApplyNow() throws Exception{
         vars.put("window_handles", driver.getWindowHandles());
         Thread.sleep(5000);
-        driver.findElement(By.linkText("circular24")).click();
+        driver.findElement(By.linkText(Objects.requireNonNull(ReadTestData.getScriptValue("csearch")))).click();
         Thread.sleep(5000);
 
         //Switch between browser tabs using Selenium WebDriver
@@ -159,9 +161,18 @@ public class WebTest {
         jscroll1.executeScript("window.scrollBy(0,100)"); // Scroll Down(+ve) upto browse option
         Thread.sleep(2000); // suspending execution for specified time period
 
+        String NID = ReadTestData.getScriptValue("NID");
+        assert NID != null;
+        String[] niddata = NID.split(","); //Read NID test data from cfg file
+
+        String pinfo = ReadTestData.getScriptValue("personalinfo");
+        assert pinfo != null;
+        String[] personalinfo = pinfo.split(","); //Read Personal Info test data from cfg file
+
         // ENTER National ID
         driver.findElement(By.id("national_id")).click();
-        driver.findElement(By.id("national_id")).sendKeys("8231771135");
+        //driver.findElement(By.id("national_id")).sendKeys("8231771135");
+        driver.findElement(By.id("national_id")).sendKeys(niddata [0]);
         driver.findElement(By.id("national_id")).sendKeys(Keys.ENTER);
         Thread.sleep(3000);
 
@@ -171,7 +182,8 @@ public class WebTest {
 
         // NID FILE UPLOADING ....
         WebElement addFile = driver.findElement(By.id("national_id_attachment"));
-        addFile.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\NID.jpg");// For setting a profile picture
+        //addFile.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\NID.jpg");// For setting a profile picture
+        addFile.sendKeys(ReadTestData.imagePath+niddata[1]);// For setting a profile picture
         Thread.sleep(3000);
 
         // ENTER Date of Birth
@@ -180,11 +192,11 @@ public class WebTest {
         // cast the driver to JavascriptExecutor
         JavascriptExecutor js3 = (JavascriptExecutor) driver;
         js3.executeScript("arguments[0].value = arguments[1]",
-                driver.findElement(By.id("date_of_birth")), "23-08-1995");
+                driver.findElement(By.id("date_of_birth")), niddata [2]);
         Thread.sleep(2000);
 
         //WebElement dob = driver.findElement(By.id("date_of_birth"));
-        dob.sendKeys("23081995");
+        dob.sendKeys(niddata [3]);
         dob.sendKeys(Keys.ENTER);
         Thread.sleep(3000);
 
@@ -198,21 +210,21 @@ public class WebTest {
 
         //ENTER Father Name
         driver.findElement(By.id("father_name")).click();
-        driver.findElement(By.id("father_name")).sendKeys("Father Name");
+        driver.findElement(By.id("father_name")).sendKeys(personalinfo[0]);
         Thread.sleep(3000);
         JavascriptExecutor jscroll4 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll4.executeScript("window.scrollBy(0,400)"); // Scroll Down(+ve) upto browse option
         Thread.sleep(2000);
         //ENTER Mother Name
         driver.findElement(By.id("mother_name")).click();
-        driver.findElement(By.id("mother_name")).sendKeys("Mother Name");
+        driver.findElement(By.id("mother_name")).sendKeys(personalinfo[1]);
         Thread.sleep(3000);
         JavascriptExecutor jscroll5 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll5.executeScript("window.scrollBy(0,400)"); // Scroll Down(+ve) upto browse option
         Thread.sleep(2000);
 
         driver.findElement(By.id("mobile")).click();
-        driver.findElement(By.id("mobile")).sendKeys("01911111114");
+        driver.findElement(By.id("mobile")).sendKeys(personalinfo[2]);
         Thread.sleep(5000);
 
         //assertThat(driver.switchTo().alert().getText(), is("Your One-Time Password is 5078. Please enter the password to login."));
@@ -239,7 +251,7 @@ public class WebTest {
 
         //Enter email info
         driver.findElement(By.id("email")).click();
-        driver.findElement(By.id("email")).sendKeys("TEST@TEST.COM");
+        driver.findElement(By.id("email")).sendKeys(personalinfo[3]);
         driver.findElement(By.id("email")).sendKeys(Keys.ENTER);
         Thread.sleep(3000);
 
@@ -262,7 +274,7 @@ public class WebTest {
         Thread.sleep(3000);
         //Enter Spouse Name
         driver.findElement(By.id("spouse_name")).click();
-        driver.findElement(By.id("spouse_name")).sendKeys("MARIA SULTANA");
+        driver.findElement(By.id("spouse_name")).sendKeys(personalinfo[4]);
         Thread.sleep(3000);
 
         JavascriptExecutor jscroll8 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
@@ -280,12 +292,14 @@ public class WebTest {
 
         //Upload photo
         WebElement addPhoto = driver.findElement(By.id("photo"));
-        addPhoto.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\Photo.jpg");// For setting a profile picture
+        //addPhoto.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\Photo.jpg");// For setting a profile picture
+        addPhoto.sendKeys(ReadTestData.imagePath+personalinfo[5]);// For setting a profile picture
         Thread.sleep(3000);
 
         //Upload signature
         WebElement addSign = driver.findElement(By.id("signature"));
-        addSign.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\Signature.jpg");// For setting a profile picture
+        //addSign.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\Signature.jpg");// For setting a profile picture
+        addSign.sendKeys(ReadTestData.imagePath+personalinfo[6]);// For setting a profile picture
         Thread.sleep(3000);
 
         JavascriptExecutor jscroll9 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
