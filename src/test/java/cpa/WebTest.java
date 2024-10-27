@@ -15,6 +15,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
+import util.ReadTestData;
 
 import java.util.*;
 
@@ -25,9 +26,10 @@ public class WebTest {
     public static WebDriver driver;
     private Map<String, Object> vars;
     JavascriptExecutor js;
+    //public static  ReadTestData testInitdata  = null;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
 
         //Please uncomment if wants to test in Firefox browser
 //        System.setProperty("webdriver.gecko.driver","D:\\DDrive\\Soft\\geckodriver\\geckodriver.exe");
@@ -50,8 +52,12 @@ public class WebTest {
         driver.manage().window().maximize();
 
         //Test case id: TC_01 verify Open the web aplication
-        String url= "http://123.200.20.20:5302/";
+        ReadTestData.readCFGfile(); //read cfg file for test data
+        String url = ReadTestData.getScriptValue("cpaurl");
+        //String url= "http://123.200.20.20:5302/";
         driver.get(url);
+        Thread.sleep(5000);
+
 
     }
 
@@ -101,7 +107,7 @@ public class WebTest {
      */
     public void CircularSearch() throws Exception{
         driver.findElement(By.cssSelector("#circularMst_filter .form-control")).click();
-        driver.findElement(By.cssSelector("#circularMst_filter .form-control")).sendKeys("circular24");
+        driver.findElement(By.cssSelector("#circularMst_filter .form-control")).sendKeys(ReadTestData.getScriptValue("circularsearch"));
         driver.findElement(By.cssSelector("#circularMst_filter .form-control")).sendKeys(Keys.ENTER);
         //Thread.sleep(5000);
         //Assert.assertTrue(driver.getCurrentUrl().contains("99/2024"));
