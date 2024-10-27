@@ -15,6 +15,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
+import util.ReadTestData;
 
 import java.util.*;
 
@@ -25,9 +26,10 @@ public class WebTest {
     public static WebDriver driver;
     private Map<String, Object> vars;
     JavascriptExecutor js;
+    protected static  ReadTestData testInitdata  = null;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
 
         //Please uncomment if wants to test in Firefox browser
 //        System.setProperty("webdriver.gecko.driver","D:\\DDrive\\Soft\\geckodriver\\geckodriver.exe");
@@ -50,8 +52,12 @@ public class WebTest {
         driver.manage().window().maximize();
 
         //Test case id: TC_01 verify Open the web aplication
-        String url= "http://123.200.20.20:5302/";
+        String url = ReadTestData.getScriptValue("cpaurl");
+        System.out.println("CPA URL is:>>> " + url);
+        Thread.sleep(50000);
+        //String url= "http://123.200.20.20:5302/";
         driver.get(url);
+
 
     }
 
