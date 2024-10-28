@@ -48,7 +48,7 @@ public class WebTest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
-        //driver.manage().window().maximize();
+        driver.manage().window().maximize();
 
         //Test case id: TC_01 verify Open the web aplication
         ReadTestData.readCFGfile(); //Read cfg file for loading test data
@@ -127,18 +127,18 @@ public class WebTest {
      */
     public void JobApplyNow() throws Exception{
         vars.put("window_handles", driver.getWindowHandles());
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         driver.findElement(By.linkText(Objects.requireNonNull(ReadTestData.getScriptValue("csearch")))).click();
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
         //Switch between browser tabs using Selenium WebDriver
         driver.getWindowHandles().forEach(tab->driver.switchTo().window(tab));
         assertTrue(driver.findElement(By.id("circularDtl")).isDisplayed());
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
         //Click on the Action icon
         driver.findElement(By.linkText("Apply")).click();
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         //Click on the Apply Now button
 //        driver.findElement(By.cssSelector("strong")).click();
 //        Thread.sleep(5000);
@@ -193,16 +193,16 @@ public class WebTest {
         JavascriptExecutor js3 = (JavascriptExecutor) driver;
         js3.executeScript("arguments[0].value = arguments[1]",
                 driver.findElement(By.id("date_of_birth")), niddata [2]);
-        Thread.sleep(2000);
+        Thread.sleep(5000);
 
         //WebElement dob = driver.findElement(By.id("date_of_birth"));
         dob.sendKeys(niddata [3]);
         dob.sendKeys(Keys.ENTER);
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         // CLICK ON VERIFY NID BUTTON
         driver.findElement(By.id("nid_verification")).click();
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         JavascriptExecutor jscroll3 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll3.executeScript("window.scrollBy(0,400)"); // Scroll Down(+ve) upto browse option
@@ -243,7 +243,7 @@ public class WebTest {
         //Enter OTP value for match
         driver.findElement(By.id("otp")).click();
         driver.findElement(By.id("otp")).sendKeys(otp);
-        Thread.sleep(4000);
+        Thread.sleep(3000);
         Alert alert2 = driver.switchTo().alert();
         alert2.accept();
         Thread.sleep(3000);
@@ -269,12 +269,13 @@ public class WebTest {
         driver.findElement(By.id("marital_status")).click();
         {
             WebElement dropdown = driver.findElement(By.id("marital_status"));
-            dropdown.findElement(By.xpath("//option[. = 'MARRIED']")).click();
+            //dropdown.findElement(By.xpath("//option[. = 'MARRIED']")).click();
+            dropdown.findElement(By.xpath("//option[. = '"+personalinfo[4]+"' ]")).click();
         }
         Thread.sleep(3000);
         //Enter Spouse Name
         driver.findElement(By.id("spouse_name")).click();
-        driver.findElement(By.id("spouse_name")).sendKeys(personalinfo[4]);
+        driver.findElement(By.id("spouse_name")).sendKeys(personalinfo[5]);
         Thread.sleep(3000);
 
         JavascriptExecutor jscroll8 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
@@ -285,21 +286,22 @@ public class WebTest {
         driver.findElement(By.id("religion")).click();
         {
             WebElement dropdown = driver.findElement(By.id("religion"));
-            dropdown.findElement(By.xpath("//option[. = 'ISLAM']")).click();
+            //dropdown.findElement(By.xpath("//option[. = 'ISLAM']")).click();
+            dropdown.findElement(By.xpath("//option[. = '"+personalinfo[6]+"' ]")).click();
         }
-        driver.findElement(By.cssSelector("#religion > option:nth-child(2)")).click();
+        //driver.findElement(By.cssSelector("#religion > option:nth-child(2)")).click();
         Thread.sleep(3000);
 
         //Upload photo
         WebElement addPhoto = driver.findElement(By.id("photo"));
         //addPhoto.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\Photo.jpg");// For setting a profile picture
-        addPhoto.sendKeys(ReadTestData.imagePath+personalinfo[5]);// For setting a profile picture
+        addPhoto.sendKeys(ReadTestData.imagePath+personalinfo[7]);// For setting a profile picture
         Thread.sleep(3000);
 
         //Upload signature
         WebElement addSign = driver.findElement(By.id("signature"));
         //addSign.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\Signature.jpg");// For setting a profile picture
-        addSign.sendKeys(ReadTestData.imagePath+personalinfo[6]);// For setting a profile picture
+        addSign.sendKeys(ReadTestData.imagePath+personalinfo[8]);// For setting a profile picture
         Thread.sleep(3000);
 
         JavascriptExecutor jscroll9 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
@@ -308,7 +310,7 @@ public class WebTest {
 
         // CLICK ON NEXT BUTTON
         driver.findElement(By.cssSelector(".justify-content-end:nth-child(1) > .btn")).click();
-        Thread.sleep(3000);
+        Thread.sleep(23000);
 
     } //End BasicInformation
 
