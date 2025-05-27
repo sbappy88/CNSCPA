@@ -12,12 +12,14 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+
 import java.io.File;
 import java.io.IOException;
 
 public class ExtentDemo {
     static ExtentTest test;
     static ExtentReports report;
+
     @BeforeClass
     public static void startTest()
     {
@@ -29,7 +31,7 @@ public class ExtentDemo {
         //System.setProperty("webdriver.chrome.driver", "D:SubmittalExchange_TFSQAAutomation3rdpartychromechromedriver.exe");
         ChromeOptions opt=new ChromeOptions();
         opt.addArguments("--remote-allow-origins=*");
-        System.setProperty("webdriver.chrome.driver", "D:\\DDrive\\Chromedriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "E:\\D\\DDrive\\Chromedriver\\chromedriver.exe");
         WebDriver driver = new ChromeDriver(opt);
         driver.get("https://www.google.co.in");
         if(driver.getTitle().equals("Google"))

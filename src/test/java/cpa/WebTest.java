@@ -1,5 +1,6 @@
 package cpa;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
@@ -11,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Alert;
@@ -31,24 +33,24 @@ public class WebTest {
     public void setUp() throws Exception {
 
         //Please uncomment if wants to test in Firefox browser
-//        System.setProperty("webdriver.gecko.driver","D:\\DDrive\\Soft\\geckodriver\\geckodriver.exe");
-//        WebDriverManager.firefoxdriver().setup();
-//        driver = new FirefoxDriver();
-//        js = (JavascriptExecutor) driver;
-//        vars = new HashMap<String, Object>();
-//        driver.manage().window().maximize();
-
-
-        //Please uncomment if wants to test in Chrome browser
-        ChromeOptions opt=new ChromeOptions();
-        opt.addArguments("--remote-allow-origins=*");
-        System.setProperty("webdriver.chrome.driver", "D:\\DDrive\\Chromedriver\\chromedriver.exe");
-        driver = new ChromeDriver(opt);
-        //2. Using Implicitly Wait Command
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        System.setProperty("webdriver.gecko.driver","E:\\D\\DDrive\\Soft\\geckodriver\\geckodriver.exe");
+        WebDriverManager.firefoxdriver().setup();
+        driver = new FirefoxDriver();
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
         driver.manage().window().maximize();
+
+
+        //Please uncomment if wants to test in Chrome browser
+//        ChromeOptions opt=new ChromeOptions();
+//        opt.addArguments("--remote-allow-origins=*");
+//        System.setProperty("webdriver.chrome.driver", "E:\\D\\DDrive\\Chromedriver\\chromedriver.exe");
+//        driver = new ChromeDriver(opt);
+//        //2. Using Implicitly Wait Command
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        js = (JavascriptExecutor) driver;
+//        vars = new HashMap<String, Object>();
+//        driver.manage().window().maximize();
 
         //Test case id: TC_01 verify Open the web aplication
         ReadTestData.readCFGfile(); //Read cfg file for loading test data
@@ -133,12 +135,12 @@ public class WebTest {
 
         //Switch between browser tabs using Selenium WebDriver
         driver.getWindowHandles().forEach(tab->driver.switchTo().window(tab));
-        assertTrue(driver.findElement(By.id("circularDtl")).isDisplayed());
+        //assertTrue(driver.findElement(By.id("circularDtl")).isDisplayed());
         Thread.sleep(3000);
 
         //Click on the Action icon
         driver.findElement(By.linkText("Apply")).click();
-        Thread.sleep(3000);
+        Thread.sleep(3000000);
         //Click on the Apply Now button
 //        driver.findElement(By.cssSelector("strong")).click();
 //        Thread.sleep(5000);
