@@ -4,9 +4,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsNot.not;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -101,7 +98,6 @@ public class WebTest {
      * Description: this function will search for specific circular
      * Test Case reference number: TC_02
      * Parameters: None
-     *
      */
     public void CircularSearch() throws Exception{
         driver.findElement(By.cssSelector("#circularMst_filter .form-control")).click();
@@ -125,7 +121,6 @@ public class WebTest {
      * Description: this function will click on a specific circular and then apply for job without login
      * Test Case reference number: TC_03, TC_06, TC_07 and TC_08
      * Parameters: None
-     *
      */
     public void JobApplyNow() throws Exception{
         vars.put("window_handles", driver.getWindowHandles());
@@ -139,8 +134,10 @@ public class WebTest {
         Thread.sleep(3000);
 
         //Click on the Action icon
-        driver.findElement(By.linkText("Apply")).click();
-        Thread.sleep(3000000);
+        //**driver.findElement(By.linkText("Apply")).click();/
+        driver.findElement(By.cssSelector(".even .btn")).click();
+        //driver.findElement(By.cssSelector(".odd:nth-child(3) .btn")).click();
+        Thread.sleep(3000);
         //Click on the Apply Now button
 //        driver.findElement(By.cssSelector("strong")).click();
 //        Thread.sleep(5000);
@@ -176,7 +173,7 @@ public class WebTest {
         //driver.findElement(By.id("national_id")).sendKeys("8231771135");
         driver.findElement(By.id("national_id")).sendKeys(niddata [0]);
         driver.findElement(By.id("national_id")).sendKeys(Keys.ENTER);
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         JavascriptExecutor jscroll2 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll2.executeScript("window.scrollBy(0,100)"); // Scroll Down(+ve) upto browse option
@@ -186,7 +183,7 @@ public class WebTest {
         WebElement addFile = driver.findElement(By.id("national_id_attachment"));
         //addFile.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\NID.jpg");// For setting a profile picture
         addFile.sendKeys(ReadTestData.imagePath+niddata[1]);// For setting a profile picture
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         // ENTER Date of Birth
 
@@ -195,39 +192,55 @@ public class WebTest {
         JavascriptExecutor js3 = (JavascriptExecutor) driver;
         js3.executeScript("arguments[0].value = arguments[1]",
                 driver.findElement(By.id("date_of_birth")), niddata [2]);
-        Thread.sleep(5000);
+        Thread.sleep(2000);
 
         //WebElement dob = driver.findElement(By.id("date_of_birth"));
         dob.sendKeys(niddata [3]);
         dob.sendKeys(Keys.ENTER);
-        Thread.sleep(5000);
+        Thread.sleep(2000);
 
         // CLICK ON VERIFY NID BUTTON
         driver.findElement(By.id("nid_verification")).click();
-        Thread.sleep(5000);
+        Thread.sleep(2000);
 
         JavascriptExecutor jscroll3 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll3.executeScript("window.scrollBy(0,400)"); // Scroll Down(+ve) upto browse option
         Thread.sleep(2000);
 
+        //ENTER First Name English and Bangla Both
+        driver.findElement(By.id("first_name")).click();
+        driver.findElement(By.id("first_name")).sendKeys(personalinfo[0]);
+        driver.findElement(By.id("last_name")).click();
+        driver.findElement(By.id("last_name")).sendKeys(personalinfo[1]);
+        driver.findElement(By.id("first_name_bangla")).click();
+        driver.findElement(By.id("first_name_bangla")).sendKeys(personalinfo[2]);
+        driver.findElement(By.id("last_name_bangla")).click();
+        driver.findElement(By.id("last_name_bangla")).sendKeys(personalinfo[3]);
+
         //ENTER Father Name
         driver.findElement(By.id("father_name")).click();
-        driver.findElement(By.id("father_name")).sendKeys(personalinfo[0]);
-        Thread.sleep(3000);
+        driver.findElement(By.id("father_name")).sendKeys(personalinfo[4]);
+        Thread.sleep(2000);
+        driver.findElement(By.id("father_name_bangla")).click();
+        driver.findElement(By.id("father_name_bangla")).sendKeys(personalinfo[5]);
+        Thread.sleep(2000);
         JavascriptExecutor jscroll4 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll4.executeScript("window.scrollBy(0,400)"); // Scroll Down(+ve) upto browse option
         Thread.sleep(2000);
         //ENTER Mother Name
         driver.findElement(By.id("mother_name")).click();
-        driver.findElement(By.id("mother_name")).sendKeys(personalinfo[1]);
+        driver.findElement(By.id("mother_name")).sendKeys(personalinfo[6]);
         Thread.sleep(3000);
+        driver.findElement(By.id("mother_name_bangla")).click();
+        driver.findElement(By.id("mother_name_bangla")).sendKeys(personalinfo[7]);
+        Thread.sleep(2000);
         JavascriptExecutor jscroll5 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll5.executeScript("window.scrollBy(0,400)"); // Scroll Down(+ve) upto browse option
         Thread.sleep(2000);
 
         driver.findElement(By.id("mobile")).click();
-        driver.findElement(By.id("mobile")).sendKeys(personalinfo[2]);
-        Thread.sleep(5000);
+        driver.findElement(By.id("mobile")).sendKeys(personalinfo[8]);
+        Thread.sleep(3000);
 
         //assertThat(driver.switchTo().alert().getText(), is("Your One-Time Password is 5078. Please enter the password to login."));
         //Trim OTP info from the alert box
@@ -253,18 +266,18 @@ public class WebTest {
 
         //Enter email info
         driver.findElement(By.id("email")).click();
-        driver.findElement(By.id("email")).sendKeys(personalinfo[3]);
+        driver.findElement(By.id("email")).sendKeys(personalinfo[9]);
         driver.findElement(By.id("email")).sendKeys(Keys.ENTER);
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         JavascriptExecutor jscroll7 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll7.executeScript("window.scrollBy(0,400)"); // Scroll Down(+ve) upto browse option
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         // Select Gender Male/Female/Others
         //driver.findElement(By.cssSelector(".col-md-9 .custom-control:nth-child(1) > .custom-control-label")).click();
         driver.findElement(By.cssSelector(".col-md-9 .custom-control:nth-child(2) > .custom-control-label")).click();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         //driver.findElement(By.cssSelector(".col-md-9 .custom-control:nth-child(3) > .custom-control-label")).click();
 
         // Select MARITAL STATUS
@@ -272,39 +285,39 @@ public class WebTest {
         {
             WebElement dropdown = driver.findElement(By.id("marital_status"));
             //dropdown.findElement(By.xpath("//option[. = 'MARRIED']")).click();
-            dropdown.findElement(By.xpath("//option[. = '"+personalinfo[4]+"' ]")).click();
+            dropdown.findElement(By.xpath("//option[. = '"+personalinfo[10]+"' ]")).click();
         }
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         //Enter Spouse Name
         driver.findElement(By.id("spouse_name")).click();
-        driver.findElement(By.id("spouse_name")).sendKeys(personalinfo[5]);
-        Thread.sleep(3000);
+        driver.findElement(By.id("spouse_name")).sendKeys(personalinfo[11]);
+        Thread.sleep(2000);
 
         JavascriptExecutor jscroll8 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll8.executeScript("window.scrollBy(0,400)"); // Scroll Down(+ve) upto browse option
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         //Select religion from the list
         driver.findElement(By.id("religion")).click();
         {
             WebElement dropdown = driver.findElement(By.id("religion"));
             //dropdown.findElement(By.xpath("//option[. = 'ISLAM']")).click();
-            dropdown.findElement(By.xpath("//option[. = '"+personalinfo[6]+"' ]")).click();
+            dropdown.findElement(By.xpath("//option[. = '"+personalinfo[12]+"' ]")).click();
         }
         //driver.findElement(By.cssSelector("#religion > option:nth-child(2)")).click();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         //Upload photo
         WebElement addPhoto = driver.findElement(By.id("photo"));
         //addPhoto.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\Photo.jpg");// For setting a profile picture
-        addPhoto.sendKeys(ReadTestData.imagePath+personalinfo[7]);// For setting a profile picture
-        Thread.sleep(3000);
+        addPhoto.sendKeys(ReadTestData.imagePath+personalinfo[13]);// For setting a profile picture
+        Thread.sleep(2000);
 
         //Upload signature
         WebElement addSign = driver.findElement(By.id("signature"));
         //addSign.sendKeys("D:\\\\SelIDE\\\\WebTest\\\\image\\\\Signature.jpg");// For setting a profile picture
-        addSign.sendKeys(ReadTestData.imagePath+personalinfo[8]);// For setting a profile picture
-        Thread.sleep(3000);
+        addSign.sendKeys(ReadTestData.imagePath+personalinfo[14]);// For setting a profile picture
+        Thread.sleep(2000);
 
         JavascriptExecutor jscroll9 = (JavascriptExecutor)driver; // Scroll operation using Js Executor
         jscroll9.executeScript("window.scrollBy(0,400)"); // Scroll Down(+ve) upto browse option
@@ -312,7 +325,7 @@ public class WebTest {
 
         // CLICK ON NEXT BUTTON
         driver.findElement(By.cssSelector(".justify-content-end:nth-child(1) > .btn")).click();
-        Thread.sleep(23000);
+        Thread.sleep(3000);
 
     } //End BasicInformation
 
@@ -324,7 +337,7 @@ public class WebTest {
      *
      */
     public void Address() throws Exception{
-        //ENTER applicant division info
+        //ENTER applicant DIVISSION info
         driver.findElement(By.id("permanent_division")).click();
         {
             WebElement dropdown = driver.findElement(By.id("permanent_division"));
@@ -333,7 +346,7 @@ public class WebTest {
         driver.findElement(By.cssSelector("#permanent_division > option:nth-child(2)")).click();
         Thread.sleep(3000);
 
-        //ENTER applicant distric info
+        //ENTER applicant DISTRICT info
         driver.findElement(By.id("permanent_district")).click();
         {
             WebElement dropdown = driver.findElement(By.id("permanent_district"));
@@ -358,18 +371,24 @@ public class WebTest {
 
         //ENTER applicant post code info
         driver.findElement(By.id("permanent_post_office_name")).click();
-        driver.findElement(By.id("permanent_post_office_name")).sendKeys("1217");
+        driver.findElement(By.id("permanent_post_office_name")).sendKeys("Ramna");
         Thread.sleep(3000);
 
         //ENTER applicant post code info
         driver.findElement(By.id("permanent_post_code")).click();
-        driver.findElement(By.id("permanent_post_code")).sendKeys("1217");
+        driver.findElement(By.id("permanent_post_code")).sendKeys("1216");
         driver.findElement(By.id("permanent_post_code")).sendKeys(Keys.ENTER);
         Thread.sleep(3000);
 
+        driver.findElement(By.id("permanent_post_office_name_bng")).click();
+        driver.findElement(By.id("permanent_post_office_name_bng")).sendKeys("রমনা");
+
+        driver.findElement(By.id("permanent_post_code_bng")).click();
+        driver.findElement(By.id("permanent_post_code_bng")).sendKeys("১২১৬");
+
         //ENTER applicant detail address info
         driver.findElement(By.id("permanent_address")).click();
-        driver.findElement(By.id("permanent_address")).sendKeys("H#4, R#11, SECTION#6, MIRPUR, DHAKA-1216");
+        driver.findElement(By.id("permanent_address")).sendKeys("H#114, R#1111, SECTION#6, MIRPUR, DHAKA-1216");
         driver.findElement(By.id("permanent_address")).sendKeys(Keys.ENTER);
         Thread.sleep(3000);
 
@@ -389,7 +408,7 @@ public class WebTest {
 
         // CLICK ON NEXT BUTTON
         driver.findElement(By.cssSelector("#enable_after_district_verification > .btn")).click();
-        Thread.sleep(4000);
+        Thread.sleep(3000);
 
     }//End of Address
 
@@ -404,8 +423,6 @@ public class WebTest {
 
         //Select the Education level
         //driver.findElement(By.id("select2-education_0_education_level-container")).click();
-
-
         driver.findElement(By.id("select2-education_0_education_level-container")).click();
         Thread.sleep(3000);
         driver.findElement(By.cssSelector(".select2-search__field")).sendKeys("ssc");
